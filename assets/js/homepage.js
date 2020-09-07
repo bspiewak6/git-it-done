@@ -1,3 +1,6 @@
+var userFormEl = document.querySelector("#user-form");
+var nameInputEl = document.querySelector("#username");
+
 var getUserRepos = function(user) {
     // format the github api url
     var apiURL = "https://api.github.com/users/" + user + "/repos";
@@ -9,4 +12,20 @@ var getUserRepos = function(user) {
         });
     });
 };
-getUserRepos("facebook");
+
+var formSubmitHandler = function(event) {
+    event.preventDefault();
+    // get value from input element
+    var username = nameInputEl.value.trim();
+
+    if (username) {
+        getUserRepos(username);
+        nameInputEl.value = "";
+    } else {
+        alert("Please enter a GitHub username");
+    }
+};
+
+// event listener for when form is submitted
+userFormEl.addEventListener("submit", formSubmitHandler);
+
